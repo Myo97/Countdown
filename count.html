@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Count</title>
+
+    <style>
+        body{
+            background-color: #fefefe;
+        }
+        .table{
+            background-color: #ddd;
+            border: 1px solid black;
+            padding: 10px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            box-shadow: 0 0 5px 5px #00000010;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+        }
+        .content{
+            font-size: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="date">Choose your Birthday</label>
+        <input type="date" id="date">
+        <button class="submit" onclick="bdDate()">Submit</button>
+    </div>
+    <table class="table">
+        <tr class="content">
+            <th colspan="4">Your Birthday will be in</th>
+        </tr>
+        <tr class="content">
+            <td id="days">00</td>
+            <td id="hours">00</td>
+            <td id="minutes">00</td>
+            <td id="seconds">00</td>
+        </tr>
+        <tr>
+            <td>Days</td>
+            <td>Hours</td>
+            <td>Minutes</td>
+            <td>Seconds</td>
+        </tr>
+    </table>
+
+    <script>
+        function bdDate(){
+            let bd = document.getElementById("date").value;
+            let bdd = bd.toString().split("-"); //yy-mm-dd
+            let eventDate = new Date(Number(bdd[0]), Number(bdd[1]-1), Number(bdd[2]));
+            bdTime = eventDate.getTime();
+
+            let currentDate = new Date();
+            let currentTime = currentDate.getTime();
+
+            remainTime = bdTime - currentTime; //milliseconds
+            // console.log(remainTime);
+            let s = Math.floor(remainTime / 1000);
+            let m = Math.floor(s / 60);
+            let h = Math.floor(m / 60);
+            let d = Math.floor(h / 24);
+
+            s %= 60;
+            m %= 60;
+            h %= 24;
+
+            if(s < 10){
+                s = "0" + s;
+            }
+            if(m < 10){
+                m = "0" + m;
+            }
+            if(h < 10){
+                h = "0" + h;
+            }
+
+            document.getElementById("days").innerHTML = d;
+            document.getElementById("hours").innerHTML = h;
+            document.getElementById("minutes").innerHTML = m;
+            document.getElementById("seconds").innerHTML = s;
+            setTimeout(bdDate,1000);
+        }
+    </script>
+</body>
+</html>
